@@ -1,43 +1,37 @@
 package com.example.controllers
 
+import com.example.services.PermissionsHelper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-
-const val ARTICLE_ADD_PERMISSION = "editor/articles/add"
-const val ARTICLE_DELETE_PERMISSION = "editor/articles/delete"
-const val SECRET_ARTICLE_ADD_PERMISSION = "editor/articles/secret/add"
-const val SECRET_ARTICLE_DELETE_PERMISSION = "editor/articles/secret/delete"
+import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("/editor")
-class EditorController {
-
-    @GetMapping("articles")
-    fun articles(model: Model): String {
-        model["title"] = "Articles"
-
-        //TODO add article, + add secret article
-
-        return ""
-    }
+class EditorController(val permissionsHelper: PermissionsHelper) {
 
     @GetMapping("articles/add")
-    fun articlesAdd(model: Model): String {
+    fun articleAddForm(model: Model): String {
         model["title"] = "Add article"
 
         //TODO add article, + add secret article
 
-        return ""
+        return "views/articleAdd"
+    }
+
+    @PostMapping("articles/add")
+    fun articleAdd(model: Model, @RequestParam title: String, @RequestParam content: String): String {
+        model["title"] = "Add article"
+
+        //TODO add article, + add secret article
+
+        return "redirect:/articles"
     }
 
     @GetMapping("articles/delete/{id}")
-    fun articlesDelete(model: Model, @PathVariable id: String): String {
+    fun articleDelete(model: Model, @PathVariable id: String): String {
         //TODO delete specific article, + delete secret article
 
-        return "redirect:/editor/articles"
+        return "redirect:/articles"
     }
 }

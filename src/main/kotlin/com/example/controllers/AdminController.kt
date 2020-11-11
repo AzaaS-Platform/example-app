@@ -1,27 +1,35 @@
 package com.example.controllers
 
+import com.example.data.User
+import com.example.services.PermissionsHelper
+import com.example.services.USER_DELETE_PERMISSION
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
-const val USER_LIST_PERMISSION = "admin"
-const val USER_DELETE_PERMISSION = "admin/delete"
-
 @Controller
 @RequestMapping("/admin")
-class AdminController {
+class AdminController(private val permissionsHelper: PermissionsHelper) {
 
-    @GetMapping("")
+    @GetMapping
     fun index(model: Model): String {
         return "redirect:/admin/users"
     }
 
     @GetMapping("users")
     fun users(model: Model): String {
+        model["title"] = "Users"
+
         // TODO users list
-        return ""
+        model["users"] = listOf(User("ide", "user"))
+        if (permissionsHelper.hasPermissions(USER_DELETE_PERMISSION)) {
+            model["showDelete"] = true
+        }
+
+        return "views/users"
     }
 
     @GetMapping("users/delete/{id}")

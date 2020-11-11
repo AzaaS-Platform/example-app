@@ -1,0 +1,30 @@
+{{>header}}
+
+<h1>{{title}}</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        {{#showDelete}}
+            <th scope="col">Delete</th>
+        {{/showDelete}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#articles}}
+        <tr>
+            <td>
+                <a href="/articles/{{id}}">{{title}}</a>
+            </td>
+            {{#showDelete}}
+                <td>
+                    <a href="/editor/articles/delete/{{id}}">DELETE</a>
+                </td>
+            {{/showDelete}}
+        </tr>
+    {{/articles}}
+    </tbody>
+</table>
+
+{{>footer}}

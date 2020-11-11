@@ -17,11 +17,7 @@ class AuthenticationController {
     }
 
     @PostMapping("/login")
-    fun login(
-        model: Model,
-        @RequestParam("login") login: String,
-        @RequestParam("password") password: String
-    ): String {
+    fun login(model: Model, @RequestParam login: String, @RequestParam password: String): String {
         model["title"] = "Login"
 
         // TODO login
