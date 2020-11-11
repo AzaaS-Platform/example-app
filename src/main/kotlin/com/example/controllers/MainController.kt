@@ -11,6 +11,6 @@ class MainController {
     @GetMapping("/")
     fun home(model: Model): String {
         model["title"] = "Home"
-        return "main"
+        return "views/home"
     }
 }
