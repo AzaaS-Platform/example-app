@@ -1,6 +1,6 @@
 package com.example.controllers
 
-import com.example.services.PermissionsHelper
+import com.example.helpers.PermissionsHelper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set

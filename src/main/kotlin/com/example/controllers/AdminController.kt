@@ -1,8 +1,8 @@
 package com.example.controllers
 
 import com.example.data.User
-import com.example.services.PermissionsHelper
-import com.example.services.USER_DELETE_PERMISSION
+import com.example.helpers.PermissionsHelper
+import com.example.helpers.USER_DELETE_PERMISSION
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class AdminController(private val permissionsHelper: PermissionsHelper) {
 
     @GetMapping
-    fun index(model: Model): String {
-        return "redirect:/admin/users"
-    }
+    fun index(model: Model) = "redirect:/admin/users"
 
     @GetMapping("users")
     fun users(model: Model): String {

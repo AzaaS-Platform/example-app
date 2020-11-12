@@ -1,8 +1,8 @@
 package com.example.controllers
 
 import com.example.data.Article
-import com.example.services.ARTICLE_DELETE_PERMISSION
-import com.example.services.PermissionsHelper
+import com.example.helpers.ARTICLE_DELETE_PERMISSION
+import com.example.helpers.PermissionsHelper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set

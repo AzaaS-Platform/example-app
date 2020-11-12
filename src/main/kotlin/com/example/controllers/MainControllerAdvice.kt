@@ -1,19 +1,22 @@
 package com.example.controllers
 
 import com.example.data.MainLink
+import com.example.helpers.SessionHelper
+import com.example.helpers.isLogged
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ModelAttribute
 
 @ControllerAdvice
-class MyControllerAdvice {
+class MyControllerAdvice(private val sessionHelper: SessionHelper) {
 
     @ModelAttribute("mainLinks")
-    fun getMainLinks(): List<MainLink> {
-        return listOf(MainLink("/", "Home"), MainLink("/articles", "Articles"), MainLink("/login", "Login"))
-    }
+    fun getMainLinks() =
+        listOf(MainLink("/", "Home"), MainLink("/articles", "Articles"), MainLink("/login", "Login"))
 
     @ModelAttribute("loggedUserLinks")
-    fun getLoggedUserLinks(): List<MainLink> {
-        return listOf(MainLink("/articles/add", "Add article"), MainLink("/logout", "Logout"))
-    }
+    fun getLoggedUserLinks() =
+        if (sessionHelper.getSession().isLogged())
+            listOf(MainLink("/editor/articles/add", "Add article"), MainLink("/logout", "Logout"))
+        else
+            listOf()
 }

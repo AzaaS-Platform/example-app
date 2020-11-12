@@ -1,4 +1,4 @@
-package com.example.services
+package com.example.helpers
 
 import com.example.exceptions.PermissionException
 
