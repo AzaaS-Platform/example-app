@@ -1,10 +1,7 @@
 package com.example.services
 
 import com.example.data.Token
-import com.example.helpers.APIConnector
-import com.example.helpers.LOGIN_KEY
-import com.example.helpers.SessionHelper
-import com.example.helpers.TOKEN_KEY
+import com.example.helpers.*
 import org.springframework.session.MapSessionRepository
 
 class AuthenticationService(
@@ -20,6 +17,7 @@ class AuthenticationService(
     }
 
     fun logout() {
+        apiConnector.invalidateToken(sessionHelper.getSession().getToken()!!.value)
         sessionHelper.getSession().removeAttribute(TOKEN_KEY)
         sessionHelper.getSession().removeAttribute(LOGIN_KEY)
         sessionRepository.deleteById(sessionHelper.getSession().id)

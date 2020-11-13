@@ -6,9 +6,9 @@
     <thead>
     <tr>
         <th scope="col">Title</th>
-        {{#operations.length}}
-            <th scope="col">Delete</th>
-        {{/operations.length}}
+        {{#operations}}
+            <th scope="col">{{name}}</th>
+        {{/operations}}
     </tr>
     </thead>
     <tbody>

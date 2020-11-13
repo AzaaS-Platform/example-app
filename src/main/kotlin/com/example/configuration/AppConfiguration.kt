@@ -2,7 +2,9 @@ package com.example.configuration
 
 import com.example.helpers.APIConnector
 import com.example.helpers.SessionHelper
+import com.example.services.AdminService
 import com.example.services.AuthenticationService
+import com.example.services.DB
 import com.example.services.PermissionsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,7 +23,16 @@ open class AppConfiguration {
     ) = PermissionsService(apiConnector, sessionHelper)
 
     @Bean
+    open fun adminService(
+        apiConnector: APIConnector,
+        sessionHelper: SessionHelper
+    ) = AdminService(apiConnector, sessionHelper)
+
+    @Bean
     open fun sessionHelper() = SessionHelper()
+
+    @Bean
+    open fun db() = DB()
 
     @Bean
     open fun apiConnector() = APIConnector()

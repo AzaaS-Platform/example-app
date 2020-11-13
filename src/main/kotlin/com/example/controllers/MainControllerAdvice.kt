@@ -23,6 +23,7 @@ class MyControllerAdvice(private val sessionHelper: SessionHelper) {
             listOf(
                 MainLink("/editor/articles/add", "Add article"),
                 MainLink("/reviewer/articles", "Articles to review"),
+                MainLink("/admin/users", "Users"),
                 MainLink("/logout", "Logout")
             )
         else

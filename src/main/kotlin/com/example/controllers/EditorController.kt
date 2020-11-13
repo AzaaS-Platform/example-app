@@ -1,10 +1,7 @@
 package com.example.controllers
 
 import com.example.data.Article
-import com.example.services.ARTICLE_ADD_PERMISSION
-import com.example.services.ARTICLE_DELETE_PERMISSION
-import com.example.services.PermissionsService
-import com.example.services.REVIEWER_PERMISSION
+import com.example.services.*
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -12,7 +9,10 @@ import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("/editor")
-class EditorController(private val permissionsService: PermissionsService) {
+class EditorController(
+    private val permissionsService: PermissionsService,
+    private val db: DB
+) {
 
     @GetMapping("articles/add")
     fun articleAddForm(model: Model): String {
@@ -29,23 +29,22 @@ class EditorController(private val permissionsService: PermissionsService) {
 
         model["title"] = "Add article"
 
-        //TODO add article
+        db.addArticle(Article(db.nextIndex, title, content))
 
         return "redirect:/articles"
     }
 
     @GetMapping("articles/delete/{id}")
-    fun articleDelete(model: Model, @PathVariable id: String): String {
-        //TODO fetch article
-        val article = Article(1, "Tytuł", "tekst tak o")
+    fun articleDelete(model: Model, @PathVariable id: Int): String {
+        val article = db.getArticle(id)
 
         if (article.accepted) {
-            permissionsService.enforcePermissions(ARTICLE_DELETE_PERMISSION)
+            permissionsService.enforcePermissions(EDITOR_PERMISSION, ARTICLE_DELETE_PERMISSION)
         } else {
             permissionsService.enforcePermissions(REVIEWER_PERMISSION, ARTICLE_DELETE_PERMISSION)
         }
 
-        //TODO delete article
+        db.removeArticle(id)
 
         return "redirect:/articles"
     }

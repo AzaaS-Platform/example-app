@@ -8,13 +8,13 @@ import org.springframework.web.server.ResponseStatusException
 
 
 const val ADMIN_PERMISSION = "admin"
-const val USER_DELETE_PERMISSION = "$ADMIN_PERMISSION/delete"
 
 const val EDITOR_PERMISSION = "editor"
 const val ARTICLE_ADD_PERMISSION = "$EDITOR_PERMISSION/articles/add"
 const val ARTICLE_DELETE_PERMISSION = "$EDITOR_PERMISSION/articles/delete"
 
 const val REVIEWER_PERMISSION = "reviewer"
+const val REVIEWER_ACCEPT_PERMISSION = "$REVIEWER_PERMISSION/accept"
 
 class PermissionsService(
     private val apiConnector: APIConnector,
@@ -28,12 +28,10 @@ class PermissionsService(
         )
     }
 
-    fun hasPermissions(vararg permissions: String) =
-        apiConnector.authorize(
-            sessionHelper.getSession().getToken()?.value ?: throw ResponseStatusException(
-                HttpStatus.FORBIDDEN,
-                "Your session expired"
-            )
+    fun hasPermissions(vararg permissions: String): Boolean {
+        return apiConnector.authorize(
+            sessionHelper.getSession().getToken()?.value ?: return false
             , *permissions
         )
+    }
 }

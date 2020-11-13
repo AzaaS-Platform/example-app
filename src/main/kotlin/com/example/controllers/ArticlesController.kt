@@ -1,10 +1,7 @@
 package com.example.controllers
 
-import com.example.data.Article
 import com.example.data.Operation
-import com.example.services.ARTICLE_DELETE_PERMISSION
-import com.example.services.PermissionsService
-import com.example.services.REVIEWER_PERMISSION
+import com.example.services.*
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -15,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/articles")
-class ArticlesController(private val permissionsService: PermissionsService) {
+class ArticlesController(
+    private val permissionsService: PermissionsService,
+    private val db: DB
+) {
 
     @GetMapping
     fun articles(model: Model): String {
         model["title"] = "Articles"
 
-        //TODO fetch articles
-        model["articles"] = listOf(Article(1, "Tytuł", "tekst tak o"))
-        if (permissionsService.hasPermissions(ARTICLE_DELETE_PERMISSION)) {
+        model["articles"] = db.articles.filter { it.accepted }
+        if (permissionsService.hasPermissions(EDITOR_PERMISSION, ARTICLE_DELETE_PERMISSION)) {
             model["operations"] = listOf(Operation("/editor/articles/delete", "DELETE"))
         }
 
@@ -31,9 +30,8 @@ class ArticlesController(private val permissionsService: PermissionsService) {
     }
 
     @GetMapping("{id}")
-    fun article(model: Model, @PathVariable id: String): String {
-        //TODO fetch article
-        val article = Article(1, "Tytuł", "tekst tak o")
+    fun article(model: Model, @PathVariable id: Int): String {
+        val article = db.getArticle(id)
 
         if (!article.accepted) permissionsService.enforcePermissions(REVIEWER_PERMISSION)
 
