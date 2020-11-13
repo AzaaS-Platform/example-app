@@ -20,6 +20,8 @@ class AuthenticationService(
     }
 
     fun logout() {
+        sessionHelper.getSession().removeAttribute(TOKEN_KEY)
+        sessionHelper.getSession().removeAttribute(LOGIN_KEY)
         sessionRepository.deleteById(sessionHelper.getSession().id)
     }
 }

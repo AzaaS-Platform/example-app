@@ -11,12 +11,20 @@ class MyControllerAdvice(private val sessionHelper: SessionHelper) {
 
     @ModelAttribute("mainLinks")
     fun getMainLinks() =
-        listOf(MainLink("/", "Home"), MainLink("/articles", "Articles"), MainLink("/login", "Login"))
+        listOf(
+            MainLink("/", "Home"),
+            MainLink("/articles", "Articles"),
+            MainLink("/login", "Login")
+        )
 
     @ModelAttribute("loggedUserLinks")
     fun getLoggedUserLinks() =
         if (sessionHelper.getSession().isLogged())
-            listOf(MainLink("/editor/articles/add", "Add article"), MainLink("/logout", "Logout"))
+            listOf(
+                MainLink("/editor/articles/add", "Add article"),
+                MainLink("/reviewer/articles", "Articles to review"),
+                MainLink("/logout", "Logout")
+            )
         else
-            listOf()
+            emptyList()
 }

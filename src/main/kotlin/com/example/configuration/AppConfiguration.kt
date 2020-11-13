@@ -1,9 +1,9 @@
 package com.example.configuration
 
 import com.example.helpers.APIConnector
-import com.example.helpers.PermissionsHelper
 import com.example.helpers.SessionHelper
 import com.example.services.AuthenticationService
+import com.example.services.PermissionsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.session.MapSessionRepository
@@ -15,7 +15,10 @@ import java.util.concurrent.ConcurrentHashMap
 open class AppConfiguration {
 
     @Bean
-    open fun permissionsEnforcer() = PermissionsHelper()
+    open fun permissionsEnforcer(
+        apiConnector: APIConnector,
+        sessionHelper: SessionHelper
+    ) = PermissionsService(apiConnector, sessionHelper)
 
     @Bean
     open fun sessionHelper() = SessionHelper()

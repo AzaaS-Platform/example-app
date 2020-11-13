@@ -6,9 +6,9 @@
     <thead>
     <tr>
         <th scope="col">Title</th>
-        {{#showDelete}}
+        {{#operations.length}}
             <th scope="col">Delete</th>
-        {{/showDelete}}
+        {{/operations.length}}
     </tr>
     </thead>
     <tbody>
@@ -17,11 +17,11 @@
             <td>
                 <a href="/articles/{{id}}">{{title}}</a>
             </td>
-            {{#showDelete}}
+            {{#operations}}
                 <td>
-                    <a href="/editor/articles/delete/{{id}}">DELETE</a>
+                    <a href="{{href}}/{{id}}">{{name}}</a>
                 </td>
-            {{/showDelete}}
+            {{/operations}}
         </tr>
     {{/articles}}
     </tbody>

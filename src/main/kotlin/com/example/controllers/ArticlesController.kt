@@ -1,8 +1,10 @@
 package com.example.controllers
 
 import com.example.data.Article
-import com.example.helpers.ARTICLE_DELETE_PERMISSION
-import com.example.helpers.PermissionsHelper
+import com.example.data.Operation
+import com.example.services.ARTICLE_DELETE_PERMISSION
+import com.example.services.PermissionsService
+import com.example.services.REVIEWER_PERMISSION
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -13,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/articles")
-class ArticlesController(private val permissionsHelper: PermissionsHelper) {
+class ArticlesController(private val permissionsService: PermissionsService) {
 
     @GetMapping
     fun articles(model: Model): String {
         model["title"] = "Articles"
 
-        //TODO articles list, + secret articles if logged
+        //TODO fetch articles
         model["articles"] = listOf(Article(1, "Tytuł", "tekst tak o"))
-        if (permissionsHelper.hasPermissions(ARTICLE_DELETE_PERMISSION)) {
-            model["showDelete"] = true
+        if (permissionsService.hasPermissions(ARTICLE_DELETE_PERMISSION)) {
+            model["operations"] = listOf(Operation("/editor/articles/delete", "DELETE"))
         }
 
         return "views/articles"
@@ -30,10 +32,13 @@ class ArticlesController(private val permissionsHelper: PermissionsHelper) {
 
     @GetMapping("{id}")
     fun article(model: Model, @PathVariable id: String): String {
-        model["title"] = "<article_title>"
+        //TODO fetch article
+        val article = Article(1, "Tytuł", "tekst tak o")
 
-        //TODO specific article, + secret article if logged
-        model["article"] = listOf(Article(1, "Tytuł", "tekst tak o"))
+        if (!article.accepted) permissionsService.enforcePermissions(REVIEWER_PERMISSION)
+
+        model["title"] = article.title
+        model["article"] = article
 
         return "views/article"
     }

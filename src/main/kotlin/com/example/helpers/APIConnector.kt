@@ -3,6 +3,7 @@ package com.example.helpers
 import com.example.data.User
 import khttp.get
 import khttp.post
+import org.json.JSONArray
 import org.json.JSONObject
 
 const val CLIENT_ID = "exampleapp"
@@ -10,7 +11,6 @@ const val API_BASE_URL = "https://cgk3n01fd7.execute-api.eu-central-1.amazonaws.
 const val API_CLIENT_URL = "$API_BASE_URL/clients/$CLIENT_ID"
 
 class APIConnector {
-
     fun authenticateUser(login: String, password: String): String = post(
         "$API_CLIENT_URL/token", data = JSONObject(
             mapOf(
@@ -30,7 +30,7 @@ class APIConnector {
     fun authorize(token: String, vararg permissions: String): Boolean = post(
         "$API_BASE_URL/authorize", data = JSONObject(
             mapOf(
-                "requiredPermissions" to permissions.toString()
+                "requiredPermissions" to JSONArray(permissions)
             )
         ),
         headers = mapOf(
