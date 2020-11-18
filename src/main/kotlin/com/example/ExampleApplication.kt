@@ -1,3 +1,5 @@
+@file:JvmName("Start")
+
 package com.example
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
