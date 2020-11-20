@@ -1,11 +1,7 @@
 package com.example.controllers
 
 import com.example.data.Operation
-import com.example.services.DB
-import com.example.services.PermissionsService
-import com.example.services.REVIEWER_ACCEPT_PERMISSION
-import com.example.services.REVIEWER_PERMISSION
-import com.example.services.EDITOR_PERMISSION
+import com.example.services.*
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -22,10 +18,10 @@ class ReviewerController(
 
     @GetMapping("articles")
     fun articles(model: Model): String {
-        permissionsService.enforcePermissions(EDITOR_PERMISSION)
+        permissionsService.enforcePermissions(REVIEWER_LIST_PERMISSION)
         model["title"] = "Articles to review"
         model["articles"] = db.articles.filter { !it.accepted }
-        if (permissionsService.hasPermissions(REVIEWER_PERMISSION)) {
+        if (permissionsService.hasPermissions(REVIEWER_DELETE_PERMISSION, REVIEWER_ACCEPT_PERMISSION)) {
             model["operations"] = listOf(
                     Operation("/editor/articles/delete", "DELETE"),
                     Operation("/reviewer/articles/accept", "ACCEPT")

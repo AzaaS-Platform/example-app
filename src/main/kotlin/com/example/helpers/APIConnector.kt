@@ -11,14 +11,6 @@ const val API_BASE_URL = "https://cgk3n01fd7.execute-api.eu-central-1.amazonaws.
 const val API_CLIENT_URL = "$API_BASE_URL/clients/$CLIENT_ID"
 
 class APIConnector {
-    fun authenticateUser(login: String, password: String): String = post(
-        "$API_CLIENT_URL/token", data = JSONObject(
-            mapOf(
-                "username" to login,
-                "password" to password
-            )
-        )
-    ).jsonObject.getJSONObject("payload").getString("token")
 
     fun invalidateToken(token: String): Boolean = get(
         "$API_BASE_URL/token/invalidate",

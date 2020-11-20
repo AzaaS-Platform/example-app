@@ -1,6 +1,5 @@
 package com.example.controllers
 
-import com.example.helpers.LOGIN_KEY
 import com.example.helpers.SessionHelper
 import org.springframework.boot.web.servlet.error.ErrorController
 import org.springframework.stereotype.Controller
@@ -19,14 +18,15 @@ class MainController(private val sessionHelper: SessionHelper) : ErrorController
     @GetMapping("/")
     fun home(model: Model): String {
         model["title"] = "Home"
-        model["login"] = sessionHelper.getSession().getAttribute(LOGIN_KEY) ?: ""
+        model["returnUrl"] = "http://localhost:8080/login"
+        model["actionUrl"] = "https://s3-eu-central-1.amazonaws.com/azaas-frontend/index.html"
 
         return "views/home"
     }
 
     @RequestMapping("/error")
     fun error(model: Model): String {
-        val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request;
+        val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
 
         model["title"] = "Error ${request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE)}"
         model["message"] = request.getAttribute(RequestDispatcher.ERROR_MESSAGE)

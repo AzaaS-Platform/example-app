@@ -31,7 +31,7 @@ class EditorController(
 
         db.addArticle(Article(db.nextIndex, title, content))
 
-        return "redirect:/articles"
+        return "redirect:/reviewer/articles"
     }
 
     @GetMapping("articles/delete/{id}")
@@ -39,9 +39,9 @@ class EditorController(
         val article = db.getArticle(id)
 
         if (article.accepted) {
-            permissionsService.enforcePermissions(EDITOR_PERMISSION, ARTICLE_DELETE_PERMISSION)
+            permissionsService.enforcePermissions(ARTICLE_DELETE_PERMISSION)
         } else {
-            permissionsService.enforcePermissions(REVIEWER_PERMISSION, ARTICLE_DELETE_PERMISSION)
+            permissionsService.enforcePermissions(REVIEWER_DELETE_PERMISSION, ARTICLE_DELETE_PERMISSION)
         }
 
         db.removeArticle(id)

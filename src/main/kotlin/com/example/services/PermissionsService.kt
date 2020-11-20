@@ -7,24 +7,25 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
 
 
-const val ADMIN_PERMISSION = "admin"
+const val ADMIN_USERS_PERMISSION = "admin/users"
 
-const val EDITOR_PERMISSION = "editor"
-const val ARTICLE_ADD_PERMISSION = "$EDITOR_PERMISSION/articles/add"
-const val ARTICLE_DELETE_PERMISSION = "$EDITOR_PERMISSION/articles/delete"
+const val ARTICLE_ADD_PERMISSION = "editor/articles/add"
+const val ARTICLE_DELETE_PERMISSION = "editor/articles/delete"
 
-const val REVIEWER_PERMISSION = "reviewer"
-const val REVIEWER_ACCEPT_PERMISSION = "$REVIEWER_PERMISSION/accept"
+const val REVIEWER_ACCEPT_PERMISSION = "reviewer/articles/accept"
+const val REVIEWER_DELETE_PERMISSION = "reviewer/articles/delete"
+const val REVIEWER_LIST_PERMISSION = "reviewer/articles/list"
+const val REVIEWER_GET_PERMISSION = "reviewer/articles/get"
 
 class PermissionsService(
-    private val apiConnector: APIConnector,
-    private val sessionHelper: SessionHelper
+        private val apiConnector: APIConnector,
+        private val sessionHelper: SessionHelper
 ) {
 
     fun enforcePermissions(vararg permissions: String) {
         if (!hasPermissions(*permissions)) throw ResponseStatusException(
-            HttpStatus.FORBIDDEN,
-            "You are not permitted to perform this action"
+                HttpStatus.FORBIDDEN,
+                "You are not permitted to perform this action"
         )
     }
 

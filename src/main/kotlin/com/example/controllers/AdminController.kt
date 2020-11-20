@@ -1,6 +1,6 @@
 package com.example.controllers
 
-import com.example.services.ADMIN_PERMISSION
+import com.example.services.ADMIN_USERS_PERMISSION
 import com.example.services.AdminService
 import com.example.services.PermissionsService
 import org.springframework.stereotype.Controller
@@ -21,7 +21,7 @@ class AdminController(
 
     @GetMapping("users")
     fun users(model: Model): String {
-        permissionsService.enforcePermissions(ADMIN_PERMISSION)
+        permissionsService.enforcePermissions(ADMIN_USERS_PERMISSION)
 
         model["title"] = "Users"
         model["users"] = adminService.getUsers()

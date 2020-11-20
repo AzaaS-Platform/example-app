@@ -4,4 +4,9 @@
     Welcome {{#login}}{{login}}{{/login}}
 </h1>
 
+<form method="get" action="{{actionUrl}}">
+    <input type="hidden" name="returnUrl" value="{{returnUrl}}">
+    <button type="submit" class="btn btn-primary">Login with Azaas</button>
+</form>
+
 {{>footer}}
