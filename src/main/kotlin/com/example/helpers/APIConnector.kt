@@ -8,7 +8,6 @@ import org.json.JSONObject
 
 const val CLIENT_ID = "exampleapp"
 const val API_BASE_URL = "https://cgk3n01fd7.execute-api.eu-central-1.amazonaws.com/prod"
-const val API_CLIENT_URL = "$API_BASE_URL/clients/$CLIENT_ID"
 
 class APIConnector {
 
@@ -20,13 +19,13 @@ class APIConnector {
     ).statusCode == 200
 
     fun authorize(token: String, vararg permissions: String): Boolean = post(
-        "$API_BASE_URL/authorize", data = JSONObject(
-            mapOf(
-                "requiredPermissions" to JSONArray(permissions)
-            )
-        ),
+        "$API_BASE_URL/authorize",
+        data = JSONObject(mapOf(
+            "requiredPermissions" to JSONArray(permissions)
+        )),
         headers = mapOf(
-            "Authorization" to "Bearer $token"
+            "Authorization" to "Bearer $token",
+            "x-azaas-client" to CLIENT_ID
         )
     ).statusCode == 200
 
@@ -38,9 +37,10 @@ class APIConnector {
     ).jsonObject.getJSONObject("payload").getString("token")
 
     fun getUsers(token: String): List<User> = get(
-        "$API_CLIENT_URL/users",
+        "$API_BASE_URL/users",
         headers = mapOf(
-            "Authorization" to "Bearer $token"
+            "Authorization" to "Bearer $token",
+            "x-azaas-client" to CLIENT_ID
         )
     ).jsonObject.getJSONArray("payload").map {
         it as JSONObject
