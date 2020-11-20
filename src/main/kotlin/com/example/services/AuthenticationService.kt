@@ -1,11 +1,10 @@
 package com.example.services
 
 import com.example.data.Token
-import com.example.helpers.APIConnector
-import com.example.helpers.SessionHelper
-import com.example.helpers.TOKEN_KEY
-import com.example.helpers.getToken
+import com.example.helpers.*
+import org.springframework.http.HttpStatus
 import org.springframework.session.MapSessionRepository
+import org.springframework.web.server.ResponseStatusException
 
 class AuthenticationService(
     private val sessionHelper: SessionHelper,
@@ -14,6 +13,12 @@ class AuthenticationService(
 ) {
 
     fun login(token: String) {
+        val tokenObject = Token(token)
+        if (tokenObject.client != CLIENT_ID) throw ResponseStatusException(
+            HttpStatus.UNAUTHORIZED,
+            "Your token is not valid"
+        )
+
         sessionHelper.getSession().setAttribute(TOKEN_KEY, Token(token))
     }
 
