@@ -13,7 +13,7 @@ class Token(token: String) {
     init {
         val payload = JSONObject(String(Base64.getDecoder().decode(token.split(".")[1])))
         this.exp = payload.getLong("exp")
-        client = payload.getString("clt")
+        client = payload.getJSONObject("payload").getString("clt")
     }
 
     val isAboutToExpire: Boolean
