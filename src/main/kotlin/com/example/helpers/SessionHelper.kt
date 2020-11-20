@@ -5,7 +5,6 @@ import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import javax.servlet.http.HttpSession
 
-const val LOGIN_KEY = "login"
 const val TOKEN_KEY = "token"
 
 class SessionHelper {

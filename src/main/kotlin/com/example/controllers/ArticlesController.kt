@@ -1,7 +1,10 @@
 package com.example.controllers
 
 import com.example.data.Operation
-import com.example.services.*
+import com.example.services.ARTICLE_DELETE_PERMISSION
+import com.example.services.DB
+import com.example.services.PermissionsService
+import com.example.services.REVIEWER_GET_PERMISSION
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -22,7 +25,7 @@ class ArticlesController(
         model["title"] = "Articles"
 
         model["articles"] = db.articles.filter { it.accepted }
-        if (permissionsService.hasPermissions(EDITOR_PERMISSION, ARTICLE_DELETE_PERMISSION)) {
+        if (permissionsService.hasPermissions(ARTICLE_DELETE_PERMISSION)) {
             model["operations"] = listOf(Operation("/editor/articles/delete", "DELETE"))
         }
 
@@ -33,7 +36,7 @@ class ArticlesController(
     fun article(model: Model, @PathVariable id: Int): String {
         val article = db.getArticle(id)
 
-        if (!article.accepted) permissionsService.enforcePermissions(REVIEWER_PERMISSION)
+        if (!article.accepted) permissionsService.enforcePermissions(REVIEWER_GET_PERMISSION)
 
         model["title"] = article.title
         model["article"] = article

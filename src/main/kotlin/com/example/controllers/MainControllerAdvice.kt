@@ -13,8 +13,7 @@ class MyControllerAdvice(private val sessionHelper: SessionHelper) {
     fun getMainLinks() =
         listOf(
             MainLink("/", "Home"),
-            MainLink("/articles", "Articles"),
-            MainLink("/login", "Login")
+            MainLink("/articles", "Articles")
         )
 
     @ModelAttribute("loggedUserLinks")
