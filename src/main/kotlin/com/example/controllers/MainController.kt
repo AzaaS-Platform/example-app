@@ -20,6 +20,7 @@ class MainController(private val sessionHelper: SessionHelper) : ErrorController
         model["title"] = "Home"
         model["returnUrl"] = "http://localhost:8080/login"
         model["actionUrl"] = "https://s3-eu-central-1.amazonaws.com/azaas-frontend/index.html"
+        model["client"] = "exampleapp"
 
         return "views/home"
     }
