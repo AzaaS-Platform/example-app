@@ -24,7 +24,7 @@ class ArticlesController(
     fun articles(model: Model): String {
         model["title"] = "Articles"
 
-        model["articles"] = db.articles.filter { it.accepted }
+        model["articles"] = db.articles.values.filter { it.accepted }
         if (permissionsService.hasPermissions(ARTICLE_DELETE_PERMISSION)) {
             model["operations"] = listOf(Operation("/editor/articles/delete", "DELETE"))
         }

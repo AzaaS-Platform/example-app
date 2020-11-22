@@ -18,7 +18,7 @@ class MainController(private val sessionHelper: SessionHelper) : ErrorController
     @GetMapping("/")
     fun home(model: Model): String {
         model["title"] = "Home"
-        model["returnUrl"] = "http://localhost:8080/login"
+        model["returnUrl"] = "https://localhost:8080/login"
         model["actionUrl"] = "https://s3-eu-central-1.amazonaws.com/azaas-frontend/index.html"
         model["client"] = "exampleapp"
 

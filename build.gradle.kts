@@ -20,6 +20,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mustache:2.3.5.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE")
     implementation("org.springframework.session:spring-session-core:2.4.1")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.3.5.RELEASE")
     implementation("khttp:khttp:1.0.0")
 }
 

@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 class AuthenticationController(private val authenticationService: AuthenticationService) {
 
+    @GetMapping("/login")
+    fun loginWtf(): String {
+        return "redirect:/"
+    }
+
     @PostMapping("/login")
     fun login(@RequestParam token: String): String {
         authenticationService.login(token)
