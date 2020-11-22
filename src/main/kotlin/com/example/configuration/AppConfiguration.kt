@@ -8,13 +8,22 @@ import com.example.services.DB
 import com.example.services.PermissionsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.session.MapSessionRepository
 import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession
 import java.util.concurrent.ConcurrentHashMap
 
+
 @Configuration
 @EnableSpringHttpSession
-open class AppConfiguration {
+@EnableWebSecurity
+open class AppConfiguration : WebSecurityConfigurerAdapter() {
+
+    override fun configure(http: HttpSecurity) {
+        http.csrf().disable()
+    }
 
     @Bean
     open fun permissionsEnforcer(
