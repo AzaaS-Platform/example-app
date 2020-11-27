@@ -6,6 +6,7 @@ import org.springframework.web.context.request.ServletRequestAttributes
 import javax.servlet.http.HttpSession
 
 const val TOKEN_KEY = "token"
+const val LOGIN_KEY = "login"
 
 class SessionHelper {
 
@@ -16,3 +17,5 @@ class SessionHelper {
 fun HttpSession.isLogged() = getToken()?.isActive ?: false
 
 fun HttpSession.getToken() = getAttribute(TOKEN_KEY) as Token?
+
+fun HttpSession.getLogin() = (getAttribute(LOGIN_KEY) as String?) ?: ""

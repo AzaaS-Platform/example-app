@@ -15,13 +15,16 @@
                     {{/mainLinks}}
                 </ul>
             </div>
-            <ul class="navbar-nav mt-2 mt-lg-0">
-                {{#loggedUserLinks}}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{href}}">{{content}}</a>
-                    </li>
-                {{/loggedUserLinks}}
-            </ul>
+            {{#isLogged}}
+                <ul class="navbar-nav mt-2 mt-lg-0">
+                    {{#loggedUserLinks}}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{href}}">{{content}}</a>
+                        </li>
+                    {{/loggedUserLinks}}
+                    <span class="text-light">({{login}})</span>
+                </ul>
+            {{/isLogged}}
         </div>
     </div>
 </nav>

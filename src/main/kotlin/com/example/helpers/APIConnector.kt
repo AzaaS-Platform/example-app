@@ -46,4 +46,12 @@ class APIConnector {
         it as JSONObject
         User(it.getString("entity"), it.getString("username"))
     }
+
+    fun getSelfUsername(token: String, userId: String): String = get(
+        "$API_BASE_URL/users/$userId",
+        headers = mapOf(
+            "Authorization" to "Bearer $token",
+            "x-azaas-client" to CLIENT_ID
+        )
+    ).jsonObject.getJSONObject("payload").getString("username")
 }

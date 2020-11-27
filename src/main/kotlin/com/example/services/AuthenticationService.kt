@@ -19,7 +19,9 @@ class AuthenticationService(
             "Your token is not valid"
         )
 
-        sessionHelper.getSession().setAttribute(TOKEN_KEY, Token(token))
+        val login = apiConnector.getSelfUsername(token, tokenObject.userId)
+        sessionHelper.getSession().setAttribute(TOKEN_KEY, tokenObject)
+        sessionHelper.getSession().setAttribute(LOGIN_KEY, login)
     }
 
     fun logout() {
